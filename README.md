@@ -1,1 +1,3 @@
 # simplePHP
+
+JUST FOR FUN 
