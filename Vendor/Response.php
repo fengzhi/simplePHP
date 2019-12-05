@@ -59,6 +59,21 @@ Class Response {
     }
 
     /**
+     * @param array $result
+     */
+    public function setResult($result) {
+        if(isset($result['errNo'])) {
+            $this->setErrNo($result['errNo']);
+        }
+        if(isset($result['errMsg'])) {
+            $this->setErrMsg($result['errMsg']);
+        }
+        if(isset($result['result'])) {
+            $this->setContent($result['result']);
+        }
+    }
+
+    /**
      * Sends the response to the client.
      */
     public function send() {

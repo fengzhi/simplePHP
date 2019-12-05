@@ -4,11 +4,18 @@ class Simple {
 
     public static $classMap;
 
+    /**
+     * autoload
+     * @param $className
+     */
     public static function autoload($className) {
         if (isset(static::$classMap[$className])) {
             $classFile = static::$classMap[$className];
-            include($classFile);
+        }else{
+            $simplePath = str_replace("Simple", SIMPLE_PATH."/..", $className);
+            $classFile = str_replace('\\', '/', $simplePath) . '.php';
         }
+        include($classFile);
         return;
     }
 

@@ -160,7 +160,7 @@ class Application extends Container {
         }
         if(method_exists($controller,$action)) {
             $result = $controller->$action($params);
-            $response->setContent($result);
+            $response->setResult($result);
         }else{
             $response->setErrNo("-1");
             $response->setErrMsg("method is not exists");
