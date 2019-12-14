@@ -2,9 +2,11 @@
 
 namespace Simple\Models;
 
-use Simple\Vendor\Database;
-
 class User extends Model {
+
+    protected $rules;
+
+    public $tableName="user";
 
     /**
      * @return array
@@ -16,16 +18,5 @@ class User extends Model {
             "passwd"
         ];
     }
-
-    public function __construct(Database $database)
-    {
-        foreach($this->getAttributes() as $attribute) {
-            $this->$attribute = $attribute;
-        }
-        parent::__construct($database);
-    }
-
-
-
 
 }

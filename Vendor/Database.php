@@ -80,24 +80,6 @@ class Database extends Medoo
     }
 
     /**
-     * @param $sql
-     * @return mixed
-     */
-    public function findOne($sql) {
-        $query = $this->query($sql);
-        return $query->fetch($query);
-    }
-
-    /**
-     * @param $sql
-     * @return array
-     */
-    public function findAll($sql) {
-        $query = $this->query($sql);
-        return $query->fetchAll($query);
-    }
-    
-    /**
      * @param $table
      * @param $join
      * @param null $where

@@ -60,6 +60,7 @@ class Medoo
 			{
 				$commands = [];
 			}
+            $commands[] = 'SET SQL_MODE=ANSI_QUOTES';
 
 			if (isset($options['dsn']))
 			{
@@ -107,6 +108,7 @@ class Medoo
 		}
 
 		$this->logs[] = $query;
+
 		return $this->pdo->query($query);
 	}
 
@@ -181,7 +183,8 @@ class Medoo
 				}
 				else
 				{
-					$stack[] = $this->columnQuote( $value );
+					//$stack[] = $this->columnQuote( $value );
+                    $stack[] = $value;
 				}
 			}
 		}
@@ -412,7 +415,6 @@ class Medoo
 			if ($single_condition != [])
 			{
 				$condition = $this->dataImplode($single_condition, ' AND');
-
 				if ($condition != '')
 				{
 					$where_clause = ' WHERE ' . $condition;
@@ -638,7 +640,7 @@ class Medoo
 			else
 			{
 				$where = $columns;
-				$columns = $join;
+                $columns = $join;
 			}
 		}
 
@@ -668,6 +670,7 @@ class Medoo
 		{
 			$column = $this->columnPush($columns);
 		}
+
 		return 'SELECT ' . $column . ' FROM ' . $table_query . $this->whereClause($where);
 	}
 
@@ -715,10 +718,10 @@ class Medoo
 
 	public function select($table, $join, $columns = null, $where = null)
 	{
-		$column = $where == null ? $join : $columns;
+	    $column = $where == null ? $join : $columns;
 
 		$is_single_column = (is_string($column) && $column !== '*');
-		
+
 		$query = $this->query($this->selectContext($table, $join, $columns, $where));
 
 		$stack = [];
@@ -737,7 +740,7 @@ class Medoo
 
 		if ($is_single_column)
 		{
-			return $query->fetchAll(PDO::FETCH_COLUMN);
+            return $query->fetchAll(PDO::FETCH_COLUMN);
 		}
 
 		while ($row = $query->fetch(PDO::FETCH_ASSOC))
