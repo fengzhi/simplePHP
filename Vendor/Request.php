@@ -66,10 +66,11 @@ class Request
      * @return null
      */
     public function getBodyParams() {
+        file_get_contents("php://input");
         if($this->_bodyParams === null) {
             if($this->getMethod() === 'POST') {
-                $this->_bodyParams = $_POST;
-                unset($this->_bodyParams[$this->methodParam]);
+                $this->_bodyParams =  json_decode(file_get_contents("php://input"),true);
+                //unset($this->_bodyParams[$this->methodParam]);
                 return $this->_bodyParams;
             }
         }
@@ -81,8 +82,8 @@ class Request
      * @return string
      */
     public function getMethod() {
-        if (isset($_POST[$this->methodParam])) {
-            return strtoupper($_POST[$this->methodParam]);
+        if(isset($_SERVER['REQUEST_METHOD']) && !strcasecmp($_SERVER['REQUEST_METHOD'],'POST')) {
+            return 'POST';
         }
         return 'GET';
     }
@@ -92,7 +93,11 @@ class Request
      */
     public function resolve() {
         $this->_queryParams = $_GET;
-        $route = $this->get($this->routeParam, '');
+        $uri = $_SERVER["REQUEST_URI"];
+        list($route,) = explode("?",$uri);
+        if(strpos($route,"mock")) {
+            $route = str_replace("mock/","",$route);
+        }
         return [$route, $this->getQueryParams()];
     }
 

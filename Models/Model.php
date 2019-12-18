@@ -51,4 +51,13 @@ Abstract class Model {
     public function get($columns, $where=null) {
         return $this->db->get($this->tableName,$columns,$where);
     }
+
+    /**
+     * @param $condition
+     * @return int|mixed|string
+     */
+    public function insert($condition) {
+        $this->db->insert($this->tableName,$condition);
+        return $this->db->id();
+    }
 }

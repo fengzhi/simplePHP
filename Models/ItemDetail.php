@@ -20,7 +20,8 @@ class ItemDetail {
             "slottedLength",
             "slottedPrice",
             "slottedTotalPrice",
-            "totalPrice"
+            "totalPrice",
+            "quantity"
         ];
     }
 
@@ -60,9 +61,9 @@ class ItemDetail {
         if(empty($this->width) || empty($this->totalWidth)) {
             return false;
         }else{
-            $widths = explode(",",$this->width);
+            $widths = explode("+",$this->width);
             $sumWidth = array_sum($widths);
-            if($sumWidth === $this->totalWidth) {
+            if($sumWidth == $this->totalWidth) {
                 return true;
             }else{
                 return false;
@@ -74,7 +75,7 @@ class ItemDetail {
         if(empty($this->totalLength) || empty($this->area)) {
             return false;
         }else{
-            if($this->area == round($this->totalLength * $this->totalWidth,2)) {
+            if($this->area == round($this->quantity * $this->totalLength/1000 * $this->totalWidth/1000,2)) {
                 return true;
             }else{
                 return false;

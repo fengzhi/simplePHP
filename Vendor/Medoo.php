@@ -670,7 +670,9 @@ class Medoo
 		{
 			$column = $this->columnPush($columns);
 		}
-
+		//$query = 'SELECT ' . $column . ' FROM ' . $table_query . $this->whereClause($where);
+        //echo $query;
+		//exit;
 		return 'SELECT ' . $column . ' FROM ' . $table_query . $this->whereClause($where);
 	}
 

@@ -159,7 +159,6 @@ class Application extends Container {
             throw new \Exception($e->getMessage());
         }
         if(method_exists($controller,$action)) {
-
             $result = $controller->$action($params);
             $response->setResult($result);
         }else{
